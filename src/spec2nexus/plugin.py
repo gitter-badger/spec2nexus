@@ -29,12 +29,12 @@ It is optional to:
 '''
 
 
-import os                           #@UnusedImport
-import sys                          #@UnusedImport
-import imp                          #@UnusedImport
-import inspect                      #@UnusedImport
-import pprint                       #@UnusedImport
-import re                           #@UnusedImport
+import os                           # @ UnusedImport
+#import sys                          # @ UnusedImport
+import imp                          # @ UnusedImport
+import inspect                      # @ UnusedImport
+#import pprint                       # @ UnusedImport
+import re                           # @ UnusedImport
 from spec2nexus.utils import strip_first_word #@UnusedImport
 
 

@@ -114,6 +114,7 @@ Try to read a file that does not exist:
 """
 
 
+from functools import cmp_to_key
 import re       #@UnusedImport
 import os       #@UnusedImport
 import sys      #@UnusedImport
@@ -204,9 +205,9 @@ class SpecDataFile(object):
         self.scans = {}
         self.readOK = -1
         if not os.path.exists(filename):
-            raise SpecDataFileNotFound, 'file does not exist: ' + str(filename)
+            raise SpecDataFileNotFound('file does not exist: ' + str(filename))
         if not is_spec_file(filename):
-            raise NotASpecDataFile, 'not a SPEC data file: ' + str(filename)
+            raise NotASpecDataFile('not a SPEC data file: ' + str(filename))
         self.fileName = filename
 
         if plugin_manager is None:
@@ -265,7 +266,7 @@ class SpecDataFile(object):
             buf = open(spec_file_name, 'r').read()
         except IOError:
             msg = 'Could not open spec file: ' + str(spec_file_name)
-            raise SpecDataFileCouldNotOpen, msg
+            raise SpecDataFileCouldNotOpen(msg)
         if not is_spec_file(spec_file_name):
             msg = 'Not a spec data file: ' + str(spec_file_name)
             raise NotASpecDataFile(msg)
@@ -528,5 +529,6 @@ class SpecDataFileScan(object):
             i += 1
             key = label + '_' + str(i)
             if i == 1000:
-                raise RuntimeError, "cannot make unique key for duplicated column label!"
+                msg = "cannot make unique key for duplicated column label!"
+                raise RuntimeError(msg)
         return key
