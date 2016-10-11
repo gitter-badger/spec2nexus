@@ -114,12 +114,11 @@ Try to read a file that does not exist:
 """
 
 
-from functools import cmp_to_key
 import re       #@UnusedImport
 import os       #@UnusedImport
 import sys      #@UnusedImport
 import time
-from spec2nexus.utils import get_all_plugins
+from utils import get_all_plugins
 
 
 plugin_manager = None   # will initialize when SpecDataFile is first called
@@ -175,7 +174,11 @@ def is_spec_file(filename):
     if not os.path.isfile(filename):
         return False
     expected_controls = ('#F ', '#E ', '#D ', '#C ')
-    lines = open(filename).readlines()[:len(expected_controls)]
+    
+    # CODEPAGE = 'utf-8'
+    CODEPAGE = 'ISO-8859-1'
+    
+    lines = open(filename, encoding=CODEPAGE).readlines()[:len(expected_controls)]
     if len(lines) != len(expected_controls):
         return False
     for expected, line in zip(expected_controls, lines):
@@ -293,15 +296,15 @@ class SpecDataFile(object):
     
     def getScanNumbers(self):
         '''return a list of all scan numbers sorted by scan number'''
-        def my_cmp(x, y):
-            return cmp(float(x), float(y))
-        return sorted(self.scans.keys(), my_cmp)
+        def my_key(x):
+            return float(x)
+        return sorted(self.scans.keys(), key=my_key)
     
     def getScanNumbersChronological(self):
         '''return a list of all scan numbers sorted by date'''
-        def my_cmp(x, y):
-            return cmp(time.strptime(x.date), time.strptime(y.date))
-        scans = sorted(self.scans.values(), my_cmp)
+        def my_key(x):
+            return time.strptime(x.date)
+        scans = sorted(self.scans.values(), key=my_key)
         return [_.scanNum for _ in scans]
     
     def getMinScanNumber(self):

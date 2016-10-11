@@ -12,7 +12,7 @@
 # The full license is in the file LICENSE.txt, distributed with this software.
 #-----------------------------------------------------------------------------
 
-import numpy as np
+import numpy
 import re
 import time
 import plugin
@@ -68,12 +68,12 @@ def iso8601(date):
 
 def reshape_data(scan_data, scan_shape):
     '''modified from nexpy.readers.readspec.reshape_data'''
-    scan_size = np.prod(scan_shape)
+    scan_size = numpy.prod(scan_shape)
     if scan_data.size == scan_size:
         data = scan_data
     elif scan_data.size < scan_size:
-        data = np.empty(scan_size)
-        data.fill(np.NaN)               # pad data with NaN
+        data = numpy.empty(scan_size)
+        data.fill(numpy.NaN)               # pad data with NaN
         data[0:scan_data.size] = scan_data.ravel()  # flatten & insert
     else:
         data = scan_data.ravel()        # flatten

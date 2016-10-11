@@ -21,7 +21,7 @@ class Test(unittest.TestCase):
 
 
     def testVA(self):
-        print "testVA"
+        print("testVA")
         sd = SpecDataFile(self.xpcsPluginSample)
         self.assertEqual(len(sd.headers[0].VA), 2)
         VA0 = sd.headers[0].VA['VA0'].split()
@@ -47,7 +47,7 @@ class Test(unittest.TestCase):
         self.assertEqual(VA1[8], "sa1xd")
 
     def testVD(self):
-        print "testVD"
+        print("testVD")
         sd = SpecDataFile(self.xpcsPluginSample)
         self.assertEqual(len(sd.headers[0].VD), 1)
         VD0 = sd.headers[0].VD['VD0'].split()
@@ -56,7 +56,7 @@ class Test(unittest.TestCase):
         self.assertEqual(VD0[1],"gonio2")
 
     def testVE(self):
-        print "testVE"
+        print("testVE")
         sd = SpecDataFile(self.xpcsPluginSample)
         self.assertEqual(len(sd.headers[0].VE), 2)
         VE0 = sd.headers[0].VE['VE0'].split()
@@ -75,11 +75,11 @@ class Test(unittest.TestCase):
         self.assertEqual(VE1[3],"se2i")
 
     def testXPCS(self):
-        print 'testXPCS'
+        print('testXPCS')
         sd = SpecDataFile(self.xpcsPluginSample)
         scan = sd.scans['7']
-        print dir(scan)
-        print scan.XPCS
+        print(dir(scan))
+        print(scan.XPCS)
         
 
 if __name__ == "__main__":

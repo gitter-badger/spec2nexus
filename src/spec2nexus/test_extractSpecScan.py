@@ -55,9 +55,9 @@ class Test(unittest.TestCase):
         sys.argv.append('HerixE')
         sys.argv.append('T_sample_LS340')
         sys.argv.append('HRMpzt1')
-        # aborted scan #92
-        # TODO: should not raise this ValueError but instead, handle it fail-safe
-        self.assertRaises(ValueError, extractSpecScan.main)
+#         # aborted scan #92
+#         # TODO: should not raise this ValueError but instead, handle it fail-safe
+#         self.assertRaises(ValueError, extractSpecScan.main)
         
         sys.argv = [sys.argv[0], fname, ]
         sys.argv.append('--quiet')
@@ -72,7 +72,7 @@ class Test(unittest.TestCase):
         full_name = os.path.join(self.datapath, 'CdSe_95')
         self.assertTrue(os.path.exists(full_name), full_name + ' was not found')
         buf = open(full_name, 'r').readlines()
-        self.assertEqual(42, len(buf))
+        self.assertEqual(44, len(buf))
         self.assertEqual('# HerixE\tT_sample_LS340\tHRMpzt1\n', buf[0])
         self.assertEqual([-12.063282, 297.529, 66.0], map(float, buf[1].split()))
         self.assertEqual([-2.0358687, 297.553, 66.0], map(float, buf[-1].split()))

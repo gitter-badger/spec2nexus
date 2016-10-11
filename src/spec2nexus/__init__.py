@@ -18,7 +18,7 @@ __copyright__ = '2014-2016, Pete R. Jemian'
 
 __package_name__ = 'spec2nexus'
 
-from ._version import git_release
+from _version import git_release
 __version__ = u'2016.1031.0a'
 __release__ = git_release(__package_name__, __version__)
 

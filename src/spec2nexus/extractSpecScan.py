@@ -221,11 +221,11 @@ def main():
     cmdArgs = get_user_parameters()
 
     if cmdArgs.reporting_level in (REPORTING_STANDARD, REPORTING_VERBOSE):
-        print "program: " + sys.argv[0]
+        print("program: " + sys.argv[0])
     # now open the file and read it
     specData = spec.SpecDataFile(cmdArgs.spec_file)
     if cmdArgs.reporting_level in (REPORTING_STANDARD, REPORTING_VERBOSE):
-        print "read: " + cmdArgs.spec_file
+        print("read: " + cmdArgs.spec_file)
     
     for scanNum in cmdArgs.scan:
         outFile = makeOutputFileName(cmdArgs.spec_file, scanNum)
@@ -241,8 +241,8 @@ def main():
                 if cmdArgs.reporting_level in (REPORTING_VERBOSE):
                     msg = 'column label "' + label + '" not found in scan #'
                     msg += str(scanNum) + ' ... skipping'
-                    print msg       # report all mismatched column labels
-    
+                    print(msg)       # report all mismatched column labels
+            
         if len(column_numbers) == len(cmdArgs.column):   # must be perfect matches
             txt = []
             if cmdArgs.print_labels:
@@ -289,7 +289,7 @@ def main():
             fp.write('\n'.join(txt))
             fp.close()
             if cmdArgs.reporting_level in (REPORTING_STANDARD, REPORTING_VERBOSE):
-                print "wrote: " + outFile
+                print("wrote: " + outFile)
 
 
 if __name__ == "__main__":

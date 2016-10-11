@@ -788,9 +788,6 @@ class SPEC_MCA_Array(ControlLineHandler):
     # continued lines will be matched by SPEC_DataLine
     # process these lines only after all lines have been read
 
-    # TODO: need more examples of MCA spectra in SPEC files to improve this
-    # Are there any other MCA spectra (such as @B) possible?
-    
     def process(self, text, scan, *args, **kws):
         # acquire like numerical data, handle in postprocessing
         scan.data_lines.append(text)
@@ -1036,7 +1033,7 @@ def data_lines_postprocessing(scan):
                     # only keep complete rows
                     for label, val in buf.items():
                         scan.data[label].append(val)
-            except ValueError, _exc:
+            except ValueError as _exc:
                 pass    # ignore bad data lines (could save it as such ...)
     scan.addH5writer('scan data', data_lines_writer)
 
