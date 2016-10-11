@@ -18,8 +18,8 @@ __copyright__ = '2014-2016, Pete R. Jemian'
 
 __package_name__ = 'spec2nexus'
 
-from _version import git_release
-__version__ = u'2016.1004.0'
+from ._version import git_release
+__version__ = u'2016.1031.0a'
 __release__ = git_release(__package_name__, __version__)
 
 __license_url__  = 'http://creativecommons.org/licenses/by/4.0/deed.en_US'
@@ -31,7 +31,7 @@ __url__          = u'http://spec2nexus.readthedocs.org'
 #__download_url__ = u'https://github.com/prjemian/spec2nexus/tarball/' + __version__
 __keywords__     = ['SPEC', 'diffraction', 'data acquisition', 'NeXus', 'HDF5', 'MatPlotLib']
 
-__install_requires__ = ('h5py','numpy', 'MatPlotLib', )
+__install_requires__ = ('h5py', 'numpy', 'MatPlotLib', )
 __classifiers__ = [
      'Development Status :: 5 - Production/Stable',
      'Environment :: Console',
@@ -41,6 +41,8 @@ __classifiers__ = [
      'Programming Language :: Python',
      'Programming Language :: Python :: 2',
      'Programming Language :: Python :: 2.7',
+     'Programming Language :: Python :: 3',
+     'Programming Language :: Python :: 3.5',
      'Topic :: Scientific/Engineering',
      'Topic :: Scientific/Engineering :: Astronomy',
      'Topic :: Scientific/Engineering :: Bio-Informatics',
