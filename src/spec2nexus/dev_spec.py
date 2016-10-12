@@ -6,7 +6,7 @@
 
 import os
 from lxml import etree
-import spec
+from spec2nexus import spec
 
 def prettify(someXML):
     #for more on lxml/XSLT see: http://lxml.de/xpathxslt.html#xslt-result-objects
@@ -22,7 +22,8 @@ def prettify(someXML):
         </xsl:stylesheet>''')
     transform = etree.XSLT(xslt_tree)
     result = transform(someXML)
-    return unicode(result)
+    # return unicode(result)
+    return result
 
 def developer_test(spec_file_name = None):
     """
@@ -43,41 +44,40 @@ def developer_test(spec_file_name = None):
         #spec_file_name = os.path.join(spec_dir, '130123B_2.spc')
         spec_file_name = os.path.join(spec_dir, 'user6idd.dat')
         os.chdir(spec_dir)
-        print '-'*70
+        print('-'*70)
     # now open the file and read it
-    test = spec.SpecDataFile(spec_file_name)
-    scan = test.getScan(1)
+    fp = spec.SpecDataFile(spec_file_name)
+    scan = fp.getScan(1)
     scan.interpret()
     #print scan.UXML_root
     #print prettify(scan.UXML_root)
 
     if False:
         # tell us about the test file
-        print 'file', test.fileName
-        print 'headers', len(test.headers)
-        print 'scans', len(test.scans)
-        #print 'positioners in first scan:'; print test.scans[0].positioner
-        for scan in test.scans.values():
+        print('file', fp.fileName)
+        print('headers', len(fp.headers))
+        print('scans', len(fp.scans))
+        #print 'positioners in first scan:'; print fp.scans[0].positioner
+        for scan in fp.scans.values():
             # print scan.scanNum, scan.date, scan.column_first, scan.positioner[scan.column_first], 'eV', 1e3*scan.metadata['DCM_energy']
-            print scan.scanNum, scan.scanCmd
-        print 'first scan: ', test.getMinScanNumber()
-        print 'last scan: ', test.getMaxScanNumber()
-        print 'positioners in last scan:'
-        last_scan = test.getScan(-1)
-        print last_scan.positioner
+            print(scan.scanNum, scan.scanCmd)
+        print('first scan: ', fp.getMinScanNumber())
+        print('last scan: ', fp.getMaxScanNumber())
+        print('positioners in last scan:')
+        last_scan = fp.getScan(-1)
+        print(last_scan.positioner)
         pLabel = last_scan.column_first
         dLabel = last_scan.column_last
         if len(pLabel) > 0:
-            print last_scan.data[pLabel]
-            print len(last_scan.data[pLabel])
-            print pLabel, dLabel
+            print(last_scan.data[pLabel])
+            print(len(last_scan.data[pLabel]))
+            print(pLabel, dLabel)
             for i in range(len(last_scan.data[pLabel])):
-                print last_scan.data[pLabel][i], last_scan.data[dLabel][i]
-        print 'labels in scan 1:', test.getScan(1).L
-        if test.getScan(1) is not None:
-            print 'command line of scan 5:', test.getScan(5).scanCmd
-        print '\n'.join(test.getScanCommands([1, 2]))
-    pass
+                print(last_scan.data[pLabel][i], last_scan.data[dLabel][i])
+        print('labels in scan 1:', fp.getScan(1).L)
+        if fp.getScan(1) is not None:
+            print('command line of scan 5:', fp.getScan(5).scanCmd)
+        print('\n'.join(fp.getScanCommands([1, 2])))
 
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@ unittest: scanf module
 #-----------------------------------------------------------------------------
 
 import unittest
-from scanf import scanf
+from spec2nexus.scanf import scanf
 
 
 class Test(unittest.TestCase):

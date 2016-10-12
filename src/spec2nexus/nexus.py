@@ -14,21 +14,20 @@
 
 '''Converts SPEC data files and scans into NeXus HDF5 files'''
 
-__url__ = 'http://spec2nexus.readthedocs.org/en/latest/spec2nexus.html'
+import os
+import sys
 
-import os                           #@UnusedImport
-import sys                          #@UnusedImport
-import numpy as np                  #@UnusedImport
 
 if __name__ == "__main__":
     # put us on the path for developers
     path = os.path.join('..', os.path.dirname(__file__))
     sys.path.insert(0, os.path.abspath(path))
 
-import spec
-import writer
+from spec2nexus import spec
+from spec2nexus import writer
 
 
+__url__ = 'http://spec2nexus.readthedocs.io'
 hdf5_extension = '.hdf5'
 
 
@@ -45,10 +44,10 @@ def get_user_parameters():
     '''configure user's command line parameters from sys.argv'''
     global hdf5_extension
     import argparse
-    import __init__
+    import spec2nexus.__init__
     doc = __doc__.strip().splitlines()[0]
     doc += '\n  URL: ' + __url__
-    doc += '\n  v' + __init__.__version__
+    doc += '\n  v' + spec2nexus.__init__.__version__
     parser = argparse.ArgumentParser(prog='spec2nexus', description=doc)
     parser.add_argument('infile', 
                         action='store', 
@@ -71,7 +70,7 @@ def get_user_parameters():
     parser.add_argument('-v', 
                         '--version', 
                         action='version', 
-                        version=__init__.__version__)
+                        version=spec2nexus.__init__.__version__)
     msg =  'specify which scans to save'
     msg += ', such as: -s all  or  -s 1  or  -s 1,2,3-5  (no spaces!)'
     msg += ', default = %s' % SCAN_LIST_ALL
@@ -122,7 +121,8 @@ def parse_scan_list_spec(scan_list_spec):
         elif len(sublist) == 2:
             scan_list += range(int(sublist[0]), int(sublist[1])+1)
         else:
-            raise ValueError, 'improper scan list specifier: ' + sublist
+            msg = 'improper scan list specifier: ' + sublist
+            raise ValueError(msg)
 
     sl = []
     for item in sorted(scan_list):
@@ -166,17 +166,17 @@ def main():
     for spec_data_file_name in spec_data_file_name_list:
         if not os.path.exists(spec_data_file_name):
             msg = 'File not found: ' + spec_data_file_name
-            print msg
+            print(msg)
             continue
 
         if user_parms.reporting_level in (REPORTING_STANDARD, REPORTING_VERBOSE):
-            print 'reading SPEC data file: '+spec_data_file_name
+            print('reading SPEC data file: '+spec_data_file_name)
         spec_data = spec.SpecDataFile(spec_data_file_name)
     
         scan_list = pick_scans(spec_data.getScanNumbers(), user_parms.scan_list)
         if user_parms.reporting_level in (REPORTING_VERBOSE):
-            print '  discovered', len(spec_data.scans.keys()), ' scans'
-            print '  converting scan number(s): '  +  ', '.join(map(str, scan_list))
+            print('  discovered', len(spec_data.scans.keys()), ' scans')
+            print('  converting scan number(s): '  +  ', '.join(map(str, scan_list)))
 
         basename = os.path.splitext(spec_data_file_name)[0]
         nexus_output_file_name = basename + user_parms.hdf5_extension
@@ -184,7 +184,7 @@ def main():
             out = writer.Writer(spec_data)
             out.save(nexus_output_file_name, scan_list)
             if user_parms.reporting_level in (REPORTING_STANDARD, REPORTING_VERBOSE):
-                print 'wrote NeXus HDF5 file: ' + nexus_output_file_name
+                print('wrote NeXus HDF5 file: ' + nexus_output_file_name)
 
 
 if __name__ == "__main__":

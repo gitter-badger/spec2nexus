@@ -13,12 +13,11 @@
 
 '''Command line tool to print the structure of an HDF5 file'''
 
-__url__ = 'http://spec2nexus.readthedocs.org/en/latest/h5toText.html'
-
-import os       #@UnusedImport
-import sys      #@UnusedImport
-import h5py
+import os
 import numpy
+import h5py
+
+__url__ = 'http://spec2nexus.readthedocs.io/en/latest/h5toText.html'
 
 
 class H5toText(object):
@@ -102,7 +101,7 @@ class H5toText(object):
                         s += [ fmt % (indentation, '@path', linkref.path) ]
                 else:
                     msg = "unidentified %s: %s, %s", itemname, repr(classref), repr(linkref)
-                    raise Exception, msg
+                    raise Exception(msg)
 
         for value in groups:        # show things that look like groups
             itemname = value.name.split("/")[-1]
@@ -345,7 +344,7 @@ def isNeXusFile_ByNXdataAttrs(filename):
 
         f.close()
         return True
-    except Exception, _exc:
+    except Exception as _exc:
         pass    # ignore any Exceptions, they mean that result stays "False"
     return False
 
@@ -457,18 +456,18 @@ def do_filelist(filelist, limit=5, show_attributes=True):
     for item in filelist:
         mc = H5toText(item)
         mc.array_items_shown = limit
-        print '\n'.join(mc.report(show_attributes) or '')
+        print('\n'.join(mc.report(show_attributes) or ''))
 
 
 def main():
     '''standard command-line interface'''
-    import __init__
+    import spec2nexus.__init__
     NUM_DISPLAYED_DEFAULT = 5
     NUM_DISPLAYED_MIN = 3
     import argparse
     doc = __doc__.strip().splitlines()[0]
     doc += '\n  URL: ' + __url__
-    doc += '\n  v' + __init__.__version__
+    doc += '\n  v' + spec2nexus.__init__.__version__
     parser = argparse.ArgumentParser(prog='h5toText', description=doc)
     parser.add_argument('infile', 
                         action='store', 
@@ -490,7 +489,7 @@ def main():
     parser.add_argument('-v', 
                         '--version', 
                         action='version', 
-                        version=__init__.__version__)
+                        version=spec2nexus.__init__.__version__)
     cmd_args = parser.parse_args()
 
     if cmd_args.num_displayed.lower() == "none":

@@ -27,7 +27,8 @@ def git_release(package, version='release_undefined'):
     '''
     release = version
     try:
-        import os, subprocess
+        import os
+        import subprocess
         
         # First, verify that we are in the development directory of this package.
         # Package name must match the name of the directory containing this file.

@@ -14,8 +14,8 @@ unit tests for the writer module
 
 import unittest
 import os
-import spec
-import writer
+from spec2nexus import spec
+from spec2nexus import writer
 
 
 class TestWriter(unittest.TestCase):

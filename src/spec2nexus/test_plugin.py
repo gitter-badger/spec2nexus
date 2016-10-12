@@ -13,8 +13,8 @@ unit tests for the plugin module
 #-----------------------------------------------------------------------------
 
 import unittest
-import plugin
 import os
+from spec2nexus import plugin
 
 
 class TestPlugin(unittest.TestCase):

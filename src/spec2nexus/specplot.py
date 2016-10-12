@@ -10,7 +10,7 @@ import matplotlib
 matplotlib.use('Agg')
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
-import spec             # read SPEC data files
+from spec2nexus import spec             # read SPEC data files
 
 
 __registry__ = None

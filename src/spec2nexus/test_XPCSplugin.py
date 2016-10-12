@@ -15,10 +15,8 @@ class Test(unittest.TestCase):
         self.xpcsPluginSample = os.path.join(self.datapath, 
                                              'xpcs_plugin_sample.spec')
 
-
     def tearDown(self):
         pass
-
 
     def testVA(self):
         print("testVA")

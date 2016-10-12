@@ -85,10 +85,10 @@ class ControlLineHandler(object):
         '''
         # ensure that #X and #XPCS do not both match #X
         full_pattern = '^' + self.key + '$'
-        t = re.match(full_pattern, text)
+        m_obj = re.match(full_pattern, text)
         # test regexp match to avoid false positives
         # ensures that beginning and end are different positions
-        return t and t.regs[0][1] != t.regs[0][0]
+        return m_obj and m_obj.regs[0][1] != m_obj.regs[0][0]
 
     def __str__(self):
         return str(self.__name__)

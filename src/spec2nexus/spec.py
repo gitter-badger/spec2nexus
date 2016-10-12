@@ -118,11 +118,13 @@ import re       #@UnusedImport
 import os       #@UnusedImport
 import sys      #@UnusedImport
 import time
-from utils import get_all_plugins
+from spec2nexus.utils import get_all_plugins
 
 
 plugin_manager = None   # will initialize when SpecDataFile is first called
 UNRECOGNIZED_KEY = 'unrecognized control line'
+# CODEPAGE = 'utf-8'
+CODEPAGE = 'ISO-8859-1'
 
 
 class SpecDataFileNotFound(IOError): 
@@ -174,10 +176,7 @@ def is_spec_file(filename):
     if not os.path.isfile(filename):
         return False
     expected_controls = ('#F ', '#E ', '#D ', '#C ')
-    
-    # CODEPAGE = 'utf-8'
-    CODEPAGE = 'ISO-8859-1'
-    
+        
     lines = open(filename, encoding=CODEPAGE).readlines()[:len(expected_controls)]
     if len(lines) != len(expected_controls):
         return False
@@ -234,7 +233,8 @@ class SpecDataFile(object):
         # identify all header blocks: split buf on #E control lines
         headers = []                            # caution: some files may have EOL = \r\n
         for part in buf.split('\n#E '):         # Identify the spec file header sections (usually just 1)
-            if len(part.strip()) == 0: continue         # just in case DOS EOL
+            if len(part.strip()) == 0: 
+                continue                        # just in case DOS EOL
             key = self.plugin_manager.getKey(part.splitlines()[0].strip())
             if key != '#E':
                 headers.append('#E ' + part)        # new header is starting
@@ -250,7 +250,7 @@ class SpecDataFile(object):
                 if self.plugin_manager.getKey(text) not in ('#E', '#S'):
                     block = '#S ' + block
                 self.parts.append(block)        # keep each block (starts with either #E or #S)
-        del headers, block
+        del headers
         # self.parts is a list of the #E and #S parts
 
         #------------------------------------------------------
@@ -336,7 +336,7 @@ class SpecDataFile(object):
 class SpecDataFileHeader(object):
     """contents of a spec data file header (#F) section"""
 
-    def __init__(self, buf, parent = None):
+    def __init__(self, buf, parent=None):
         #----------- initialize the instance variables
         self.parent = parent        # instance of SpecDataFile
         self.comments = []

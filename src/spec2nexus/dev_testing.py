@@ -4,10 +4,10 @@
 '''Process specific data file(s)'''
 
 
-import h5toText
 import os
-import spec
-import writer
+from spec2nexus import h5toText
+from spec2nexus import spec
+from spec2nexus import writer
 
 
 if __name__ == '__main__':

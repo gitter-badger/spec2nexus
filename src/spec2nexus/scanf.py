@@ -34,21 +34,21 @@ DEBUG = False
 # As you can probably see it is relatively easy to add more format types
 scanf_translate = [
     (re.compile(_token), _pattern, _cast) for _token, _pattern, _cast in [
-    ("%c", "(.)", lambda x:x),
-    ("%(\d)c", "(.{%s})", lambda x:x),
-    ("%(\d)[di]", "([+-]?\d{%s})", int),
-    ("%[di]", "([+-]?\d+)", int),
-    ("%u", "(\d+)", int),
+        ("%c", "(.)", lambda x: x),
+        ("%(\d)c", "(.{%s})", lambda x: x),
+        ("%(\d)[di]", "([+-]?\d{%s})", int),
+        ("%[di]", "([+-]?\d+)", int),
+        ("%u", "(\d+)", int),
+        
+        #("%[fgeE]", "(\d+\.\d+)", float),
+        # re for float is much trickier!
+        ("%[f]", "([-+]?(?:\d+(?:\.\d*)?|\.\d+))", float),
+        ("%[geE]", "([-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?)", float),
     
-    #("%[fgeE]", "(\d+\.\d+)", float),
-    # re for float is much trickier!
-    ("%[f]", "([-+]?(?:\d+(?:\.\d*)?|\.\d+))", float),
-    ("%[geE]", "([-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?)", float),
-
-    ("%s", "(\S+)", lambda x:x),
-    ("%([xX])", "(0%s[\dA-Za-f]+)", lambda x:int(x, 16)),
-    ("%o", "(0[0-7]*)", lambda x:int(x, 7)),
-    ]]
+        ("%s", "(\S+)", lambda x: x),
+        ("%([xX])", "(0%s[\dA-Za-f]+)", lambda x: int(x, 16)),
+        ("%o", "(0[0-7]*)", lambda x: int(x, 7)),
+        ]]
 
 
 
@@ -136,15 +136,15 @@ def scanf(fmt, s=None):
     or None if the format does not match.
     """
 
-    if s == None: s = sys.stdin
-    if hasattr(s, "readline"): s = s.readline()
+    s = s or sys.stdin
+    if hasattr(s, "readline"):
+        s = s.readline()
 
     format_re, casts = _scanf_compile(fmt)
     found = format_re.match(s)
     if found:
         groups = found.groups()
         return tuple([casts[i](groups[i]) for i in range(len(groups))])
-
 
 
 if __name__ == "__main__":

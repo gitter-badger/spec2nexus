@@ -12,10 +12,10 @@ unit tests for the extractSpecScan module
 # The full license is in the file LICENSE.txt, distributed with this software.
 #-----------------------------------------------------------------------------
 
-import unittest
-import extractSpecScan
 import os
 import sys
+import unittest
+from spec2nexus import extractSpecScan
 
 
 class Test(unittest.TestCase):

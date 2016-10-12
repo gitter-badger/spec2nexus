@@ -13,8 +13,8 @@ unit tests for the spec module
 #-----------------------------------------------------------------------------
 
 import unittest
-from spec2nexus import spec, utils
 import os
+from spec2nexus import spec, utils
 
 
 class Test(unittest.TestCase):

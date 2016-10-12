@@ -103,7 +103,7 @@ class SPEC_Date(ControlLineHandler):
     
     def writer(self, h5parent, writer, scan, *args, **kws):
         '''Describe how to store this data in an HDF5 NeXus file'''
-        write_dataset(h5parent, "date", iso8601(scan.date)  )
+        write_dataset(h5parent, "date", iso8601(scan.date))
 
 
 class SPEC_Comment(ControlLineHandler):
@@ -127,7 +127,7 @@ class SPEC_Comment(ControlLineHandler):
     key = '#C'
     
     def process(self, text, scan, *args, **kws):
-        scan.comments.append( strip_first_word(text) )
+        scan.comments.append(strip_first_word(text))
         if isinstance(scan, SpecDataFileScan):
             scan.addH5writer(self.key, self.writer)
     
@@ -278,7 +278,7 @@ class SPEC_CounterNames(ControlLineHandler):
     def process(self, text, header, *args, **kws):
         if not hasattr(header, 'J'):
             header.J = []
-        header.J.append( strip_first_word(text).split() )
+        header.J.append(strip_first_word(text).split())
         header.addPostProcessor('counter cross-referencing', self.postprocess)
     
     def postprocess(self, header, *args, **kws):
@@ -320,7 +320,7 @@ class SPEC_CounterMnemonics(ControlLineHandler):
     def process(self, text, header, *args, **kws):
         if not hasattr(header, 'j'):
             header.j = []
-        header.j.append( strip_first_word(text).split() )
+        header.j.append(strip_first_word(text).split())
         header.addPostProcessor('counter cross-referencing', self.postprocess)
     
     def postprocess(self, header, *args, **kws):
@@ -414,7 +414,9 @@ class SPEC_Monitor(ControlLineHandler):
         '''Describe how to store this data in an HDF5 NeXus file'''
         desc = 'SPEC scan with constant monitor count'
         write_dataset(h5parent, "counting_basis", desc)
-        write_dataset(h5parent, "M", float(scan.M), units='counts', description = desc)
+        write_dataset(h5parent, "M", float(scan.M), 
+                      units='counts', 
+                      description=desc)
 
 
 class SPEC_NumColumns(ControlLineHandler):
@@ -461,7 +463,7 @@ class SPEC_PositionerNames(ControlLineHandler):
     key = '#O\d+'
     
     def process(self, text, header, *args, **kws):
-        header.O.append( strip_first_word(text).split() )
+        header.O.append(strip_first_word(text).split())
 
 
 class SPEC_PositionerMnemonics(ControlLineHandler):
@@ -485,7 +487,7 @@ class SPEC_PositionerMnemonics(ControlLineHandler):
     def process(self, text, header, *args, **kws):
         if not hasattr(header, 'o'):
             header.o = []
-        header.o.append( strip_first_word(text).split() )
+        header.o.append(strip_first_word(text).split())
         header.addPostProcessor('positioner cross-referencing', self.postprocess)
     
     def postprocess(self, header, *args, **kws):
@@ -537,7 +539,7 @@ class SPEC_Positioners(ControlLineHandler):
     key = '#P\d+'
     
     def process(self, text, scan, *args, **kws):
-        scan.P.append( strip_first_word(text) )
+        scan.P.append(strip_first_word(text))
         scan.addPostProcessor('motor_positions', self.postprocess)
     
     def postprocess(self, scan, *args, **kws):
@@ -589,7 +591,7 @@ class SPEC_HKL(ControlLineHandler):
     def writer(self, h5parent, writer, scan, *args, **kws):
         '''Describe how to store this data in an HDF5 NeXus file'''
         desc = 'hkl at start of scan'
-        write_dataset(h5parent, "Q", scan.Q, description = desc)
+        write_dataset(h5parent, "Q", scan.Q, description=desc)
 
 
 class SPEC_CountTime(ControlLineHandler):
@@ -618,7 +620,9 @@ class SPEC_CountTime(ControlLineHandler):
         '''Describe how to store this data in an HDF5 NeXus file'''
         desc = 'SPEC scan with constant counting time'
         write_dataset(h5parent, "counting_basis", desc)
-        write_dataset(h5parent, "T", float(scan.T), units='s', description = desc)
+        write_dataset(h5parent, "T", float(scan.T), 
+                      units='s', 
+                      description=desc)
 
 
 class SPEC_TemperatureSetPoint(ControlLineHandler):
@@ -653,9 +657,10 @@ class SPEC_TemperatureSetPoint(ControlLineHandler):
     
     def process(self, text, scan, *args, **kws):
         # Try a list of formats until one succeeds
-        format_list = ["#X %fKohm (%fC)", 
-                       # "#X %g %g",        # note: %g specifier is not available
-                       "#X %f %f",
+        format_list = [
+                        "#X %fKohm (%fC)", 
+                        # "#X %g %g",        # note: %g specifier is not available
+                        "#X %f %f",
                        ]
         for fmt in format_list:
             result = scanf(fmt, text)
@@ -703,7 +708,7 @@ class SPEC_DataLine(ControlLineHandler):
         Easier to try conversion to number than construct complicated regexp
         '''
         try:
-            float( text.strip().split()[0] )
+            float(text.strip().split()[0])
             return True
         except ValueError:
             return False

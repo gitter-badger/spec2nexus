@@ -56,11 +56,11 @@ argument                       description
 Compatible with Python 2.7+
 '''
 
-__url__ = 'http://spec2nexus.readthedocs.org/en/latest/extractSpecScan.html'
-
 import os
 import sys
-import spec
+from spec2nexus import spec
+
+__url__ = 'http://spec2nexus.readthedocs.io/en/latest/extractSpecScan.html'
 
 
 #-------------------------------------------------------------------------------------------
@@ -106,7 +106,7 @@ def makeOutputFileName(specFile, scanNum):
 def get_user_parameters():
     '''configure user's command line parameters from sys.argv'''
     import argparse
-    import __init__
+    from spec2nexus import __init__
     doc = __doc__.strip().splitlines()[0]
     doc += '\n  URL: ' + __url__
     doc += '\n  v' + __init__.__version__

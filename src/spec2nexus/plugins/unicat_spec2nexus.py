@@ -44,7 +44,7 @@ class UNICAT_MetadataMnemonics(ControlLineHandler):
     key = '#H\d+'
     
     def process(self, text, spec_obj, *args, **kws):
-        spec_obj.H.append( strip_first_word(text).split() )
+        spec_obj.H.append(strip_first_word(text).split())
 
 
 class UNICAT_MetadataValues(ControlLineHandler):
@@ -68,7 +68,7 @@ class UNICAT_MetadataValues(ControlLineHandler):
     key = '#V\d+'
     
     def process(self, text, scan, *args, **kws):
-        scan.V.append( strip_first_word(text) )
+        scan.V.append(strip_first_word(text))
         scan.addPostProcessor('unicat_metadata', self.postprocess)
     
     def postprocess(self, scan, *args, **kws):

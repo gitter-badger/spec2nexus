@@ -12,10 +12,9 @@
 # The full license is in the file LICENSE.txt, distributed with this software.
 #-----------------------------------------------------------------------------
 
-import numpy
 import re
 import time
-import plugin
+import numpy
 
 
 def clean_name(key):
@@ -43,7 +42,8 @@ def clean_name(key):
 
 def get_all_plugins():
     '''load all spec2nexus plugin modules'''
-    manager = plugin.PluginManager()
+    from spec2nexus.plugin import PluginManager
+    manager = PluginManager()
     manager.load_plugins()
     return manager
 
@@ -60,9 +60,9 @@ def iso8601(date):
     :ISO8601: 2010-11-03T13:39:34
     '''
     spec_fmt = '%a %b %d %H:%M:%S %Y'
-    t = time.strptime(date, spec_fmt)
+    t_obj = time.strptime(date, spec_fmt)
     iso_fmt = '%Y-%m-%dT%H:%M:%S'
-    iso = time.strftime(iso_fmt, t)
+    iso = time.strftime(iso_fmt, t_obj)
     return iso
 
 
